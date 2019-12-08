@@ -1,19 +1,20 @@
+const exec = require("child_process").exec;
+
 const start = () => {
     console.log('Request handler \'start\' was called');
+    let content = 'empty';
 
-    const sleep = ms => {
-        const startTime = new Date().getTime();
-        while(new Date().getTime() < startTime + ms);
-    }
+    exec('ls -lah', (error, stdout, stderr) => {
+        content = stdout;
+    });
 
-    sleep(10000);
-    return 'Hello Start'
-}
+    return content;
+};
 
 const upload = () => {
     console.log('Request handler \'upload\' was called');
     return 'Hello Upload';
-}
+};
 
 exports.start = start;
 exports.upload = upload;
