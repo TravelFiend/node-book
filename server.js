@@ -1,14 +1,13 @@
 const http = require('http');
+const url = require('url');
 
-// http.createServer((req, res) => {
-//     res.writeHead(200, {"Content-Type": "text/plain"});
-//     res.write("Hello World");
-//     res.end();
-// }).listen(6789);
-
-const start = () => {
+const start = route => {
     const onRequest = (req, res) => {
-        console.log('Request recieved');
+        const pathname = url.parse(req.url).pathname;
+        console.log(`Request for ${pathname} recieved.`);
+
+        route(pathname);
+
         res.writeHead(200, {"Content-Type": "text/plain"});
         res.write("GobblyGook");
         res.end();
