@@ -6,13 +6,16 @@ const http = require('http');
 //     res.end();
 // }).listen(6789);
 
-const onRequest = (req, res) => {
-    console.log('Request recieved');
-    res.writeHead(200, {"Content-Type": "text/plain"});
-    res.write("GobblyGook");
-    res.end();
-};
+const start = () => {
+    const onRequest = (req, res) => {
+        console.log('Request recieved');
+        res.writeHead(200, {"Content-Type": "text/plain"});
+        res.write("GobblyGook");
+        res.end();
+    };
+    
+    http.createServer(onRequest).listen(6789);
+    console.log('Server has started');
+}
 
-http.createServer(onRequest).listen(6789);
-
-console.log('Server has started');
+exports.start = start;
