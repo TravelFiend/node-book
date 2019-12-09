@@ -1,19 +1,30 @@
-const exec = require("child_process").exec;
+const querystring = require('querystring');
 
-const start = res => {
+const start = (res, postData) => {
     console.log('Request handler \'start\' was called');
 
-    exec('find /', { timeout: 10000, maxBuffer: 20000*1024 }, (error, stdout, stderr) => {
-        res.writeHead(200, {"Content-Type": "text/plain"});
-        res.write(stdout);
-        res.end();
-    });
+    const body = `<html>
+    <head>
+    <meta heetp-equiv="Content-Type" content="text/html; 
+    charset=UTF-8 />
+    </head>
+    <body>
+    <form action="/upload" methos="post">
+    <textarea name="text" rows="20" cols="60"></textarea>
+    <input type="submit" vaule="submit-text" />
+    </form>
+    </body>
+    </html>`;
+
+    res.writeHead(200, {"Content-Type": "text/html"});
+    res.write(body);
+    res.end();
 };
 
-const upload = res => {
+const upload = (res, postData) => {
     console.log('Request handler \'upload\' was called');
     res.writeHead(200, {"Content-Type": "text/plain"});
-    res.write("Hello Upload");
+    res.write(`You've sent the text: ${querystring.parse(postData).text}`);
     res.end();
 };
 
